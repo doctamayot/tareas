@@ -1,0 +1,38 @@
+<section>
+  <form action="/" method="post">
+    <textarea name="content" placeholder="Escribe Tarea"></textarea>
+    <input type="submit" value="Crear Tarea">
+  </form>
+</section>
+<h2>TAREAS COMPLETADAS</h2>
+<% @tareas.each do |tarea| %>
+  <%if tarea["done"]==true%>
+    <ul><li><%=tarea["title"]%><span style= "color: green"> ✓</span>
+      <form action="/delete/<%= tarea["id"] %>" method="post">
+        <input type="hidden" name="_method" value="delete">
+        <button style= "color: red" type="submit">Borrar</button>
+      </form>
+    </li></ul>
+   <%end%>
+<%end%>
+</br>
+
+<h2>TAREAS SIN COMPLETAR</h2>
+<% @tareas.each do |tarea| %>
+  <%if tarea["done"]==false%>
+    <ul>
+      <li><%=tarea["title"]%>
+          <form action="/update/<%= tarea["id"] %>" method="post">
+            <input type="hidden" name="_method" value="patch">
+            <button style= "color: green" type="submit">completar</button>
+          </form>
+        
+          <form action="/delete/<%= tarea["id"] %>" method="post">
+            <input type="hidden" name="_method" value="delete">
+            <button style= "color: red" type="submit">Borrar</button>
+          </form>  
+      </li>
+    </ul>
+  <%end%>
+<%end%>
+
